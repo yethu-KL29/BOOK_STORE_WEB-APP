@@ -3,9 +3,10 @@ const router=express.Router();
 
 const Book = require("../models/Book")
 
-router.get('/',async(req,res,next)=>{
+router.get("/",async(req,res,next)=>{
     let books;
     try{
+        console.log("hy")
         books=await Book.find();
     }catch(e){
         console.log(e);

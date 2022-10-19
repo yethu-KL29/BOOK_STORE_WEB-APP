@@ -3,7 +3,7 @@ const mongoose=require("mongoose");
 const app=express();
 const router = require("./routes/bookroute")
 
-app.use("/book",router);
+app.use("/books",router);
 
 mongoose.connect("mongodb+srv://Admin:pass123@cluster0.xo84jx6.mongodb.net/bookstore?retryWrites=true&w=majority")
 .then(()=>console.log("connected"))
