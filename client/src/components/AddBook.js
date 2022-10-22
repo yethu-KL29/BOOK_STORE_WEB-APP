@@ -3,8 +3,10 @@ import React from 'react';
 import { useState } from 'react';
 import './Addbook.css';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 import { Checkbox } from '@mui/material';
 function AddBook() {
+  const history = useNavigate();
   const [input, setinput] = useState({
     name:'',
    description:"",
@@ -22,10 +24,19 @@ function AddBook() {
   const submit=(e)=>{
   e.preventDefault();
   console.log(input,checked);
+  sendRequest().then(()=>history('/books'))
+
   }
 
  const sendRequest=async()=>{
-  
+  await axios.post("http://localhost:5000/books",{
+    name:String(input.name),
+    author:String(input.author),
+    description:String(input.description),
+    price:Number(input.price),
+    image:String(input.image),
+    avail:Boolean(checked),
+  }).then(res=>res.data);
  }
 
   return (

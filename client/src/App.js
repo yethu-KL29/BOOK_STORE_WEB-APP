@@ -4,7 +4,8 @@ import About from './components/About';
 import AddBook from './components/AddBook';
 import Header from './components/Header';
 import Home from './components/Home';
-import AllBooks from './components/Book/AllBooks'
+import Books from './components/Book/Books'
+import Details from './components/Book/Details';
 function App() {
   return (
     <div className="App">
@@ -12,8 +13,9 @@ function App() {
     <Routes>
         <Route path="/" element = {<Home/>}></Route>
         <Route path="/add" element = {<AddBook/>}></Route>
-        <Route path="/books" element = {<AllBooks/>}></Route>
+        <Route path="/books" element = {<Books/>}></Route>
         <Route path="/about" element = {<About/>}></Route>
+        <Route path="/books/:id" element = {<Details/>}></Route>
 
      </Routes>
     </div>
