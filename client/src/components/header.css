@@ -1,0 +1,21 @@
+.header{
+    height: 100px;
+    background-color: skyblue;
+}
+.navbar{
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+    
+    
+}
+button{
+ background-color: blue;
+ height: 70x;
+ color: aliceblue;
+
+}
+.link{
+    text-decoration: none;
+    color: white;
+}
