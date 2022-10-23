@@ -1,34 +1,54 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
+import {Button} from '@mui/material';
 import { useEffect } from 'react';
-
+import { Checkbox } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 function Details() {
     const id = useParams().id
     console.log(id);
    const [input, setinput] = useState({})
    const [checked, setchecked] = useState(false)
-
+   const history = useNavigate();
   useEffect(() => {
-    const fetch=()=>{
-        axios.get(`http://localhost:5000/books/${id}`)
-        .then((res)=>res.data)
-    }
+    const fetch=async()=>{
+      await  axios
+        .get(`http://localhost:5000/books/${id}`)
+        .then((res)=>res.data).then((data)=>setinput(data.book))
+        
+    };
   
     fetch()
   }, [id])
-  const submit=(e)=>{
-     e.preventDefault();
-  }
-  const handlechange=(e)=>{
-    console.log(e)
-  }
+  console.log(input)
   
+  const handlechange=(e)=>{
+    setinput((prevstate)=>({
+      ...prevstate,
+      [e.target.name] :e.target.value
+    }))
+  }
+
+ const sendRequest=async()=>{
+  await axios.put(`http://localhost:5000/books/${id}`,{
+    name:String(input.name),
+    author:String(input.author),
+    description:String(input.description),
+    price:Number(input.price),
+    image:String(input.image),
+    avail:Boolean(checked),
+  }).then(res=>res.data);
+ }
+ const submit=(e)=>{
+  e.preventDefault();
+  sendRequest().then(()=>history("/books"))
+}
   console.log(input)
   return (
     <div>
-       <form onSubmit={submit}>
+    {input &&   <form onSubmit={submit}>
 
 <label>Name:</label>
 <input type="text" name="name" value={input.name} onChange={handlechange}/>
@@ -43,7 +63,7 @@ function Details() {
 <label>Available</label><Checkbox checked={checked} onChange={()=>setchecked(!checked)}/>
 <Button variant='contained' type='submit'>Updatebook</Button>
 
-</form>
+</form>}
     </div>
   )
 }

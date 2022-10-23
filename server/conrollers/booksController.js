@@ -21,17 +21,17 @@ const getAllBooks =async(req,res,next)=>{
 
 const getById=async(req,res,next)=>{
     const id = req.params.id;
-    let book;
+    let books;
    try{
-     book = await Book.findById(id);
+     books = await Book.findById(id);
    }catch(e){
        console.log(e);
    }
-   if(!book){
+   if(!books){
     return res.status(404).json({message:"NOT FOUND THE ID"});
 }
 else{
-    return res.status(200).json({book});
+    return res.status(200).json({books});
 }
 }
 
@@ -40,10 +40,10 @@ else{
 const Update=async(req,res,next)=>{
     const id = req.params.id;
     const{name,author,description,price,avail,image} = req.body;
-    let book;
+    let books;
   
     try {
-        book=await Book.findByIdAndUpdate(id,{
+        books=await Book.findByIdAndUpdate(id,{
             name,
             author,
             description,
@@ -51,15 +51,15 @@ const Update=async(req,res,next)=>{
             avail,
             image
         })
-        book = await book.save();
+        books = await books.save();
     } catch (e) {
         console.log(e);
     }
-    if(!book){
+    if(!books){
         return res.status(404).json({message:"NOT FOUND THE UPDATE"});
     }
     else{
-        return res.status(200).json({book});
+        return res.status(200).json({books});
     }
 }
 
@@ -67,11 +67,11 @@ const Update=async(req,res,next)=>{
 
 //4
 const addBook=async(req,res,next)=>{
-    let book;
+    let books;
 
    try{
     const{name,author,description,price,avail,image} = req.body;
-    book = new Book({
+    books = new Book({
         name,
         author,
         description,
@@ -80,15 +80,15 @@ const addBook=async(req,res,next)=>{
         image,
         
     })
-    await book.save();
+    await books.save();
    }catch(e){
     console.log(e);
    }
-   if(!book){
+   if(!books){
     return res.status(500).json({message:"NOT ADDED"});
 }
 else{
-    return res.status(201).json({book});
+    return res.status(201).json({books});
 }
 }
 //5
